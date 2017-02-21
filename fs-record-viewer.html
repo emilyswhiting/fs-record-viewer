@@ -1,0 +1,94 @@
+<template id="fs-record-viewer-template">
+  
+  <link rel="stylesheet" type="text/css" href="fs-styles.css">
+  <link rel="stylesheet" type="text/css" href="fs-record-viewer.css">
+
+  <section class="recordViewer">
+
+    <div class="toolbar"> 
+      <div class="imageNavigator">
+        <button class="imageNavigator__prev"></button>
+        Image
+        <input type="text" value="1">
+        of 865
+        <button class="imageNavigator__next"></button>
+      </div>
+
+      <div class="toolsMenu">
+        <button class="toolsMenu__print">Print</button>
+        <button class="toolsMenu__download">Download</button>
+
+        <div class="toolsDropdownContainer">
+          <button class="toolsMenu__tools">Tools</button>
+
+          <ul class="toolsDropdown">
+            <li>
+              <button class="toolsDropdown__left">Left</button>
+            </li>
+            <li>
+              <button class="toolsDropdown__adjust">Adjust Image</button>
+            </li>
+            <li>
+              <button class="toolsDropdown__invert">Invert</button>
+            </li>
+            <li class="dropdownHidden">
+              <button class="toolsDropdown__print">Print</button>
+            </li>
+            <li class="dropdownHidden">
+              <button class="toolsDropdown__download">Download</button>
+            </li>
+          </ul>
+        </div> <!--end toolsDropdownContainer-->
+      </div> <!--end toolsMenu-->
+    </div> <!--end toolbar-->
+
+    <section class="imageCollection">
+
+      <div class="imageViewer">
+        <canvas class="imageViewer__canvas" width="1012" height="626"></canvas>
+      </div>
+
+      <div class="imageCollection__prev">
+        <button class="imageCollection__button"></button>
+      </div>
+      <div class="imageCollection__next">
+        <button class="imageCollection__button"></button>
+      </div>
+
+      <div class="imageControls">
+        <button class="imageControl__zoomIn"></button>
+        <button class="imageControl__zoomOut"></button>
+        <button class="imageControl__modeThumbs"></button>
+        <button class="imageControl__fullScreen"></button>
+      </div>
+
+      <div class="imageModal" style="display: none;">
+        <div class="imageModal__spinner"></div>
+        <p class="imageModal__message">Fetching image information from server...</p>
+      </div>
+
+    </section> <!--end imageCollection-->
+
+  </section>
+</template>
+
+<script>
+
+  customElements.define('fs-record-viewer', class extends HTMLElement {
+    constructor() {
+      super();
+      
+      //Creates shadow root
+      const shadowRoot = this.attachShadow({mode: 'open'});
+    
+      //Selects the template
+      const doc = (document._currentScript || document.currentScript).ownerDocument;
+      const template = doc.querySelector('#fs-record-viewer-template');
+    
+      //Attaches template to shadow root
+      const instance = template.content.cloneNode(true);
+      shadowRoot.appendChild(instance);
+    }
+  });
+
+</script>
