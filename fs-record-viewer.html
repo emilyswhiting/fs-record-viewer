@@ -21,7 +21,7 @@
         <div class="toolsDropdownContainer">
           <button class="toolsMenu__tools">Tools</button>
 
-          <ul class="toolsDropdown">
+          <ul class="toolsDropdown hidden">
             <li>
               <button class="toolsDropdown__left">Left</button>
             </li>
@@ -74,21 +74,34 @@
 
 <script>
 
-  customElements.define('fs-record-viewer', class extends HTMLElement {
+  const doc = (document._currentScript || document.currentScript).ownerDocument;
+  
+  class fsRecordViewer extends HTMLElement {
     constructor() {
       super();
       
       //Creates shadow root
       const shadowRoot = this.attachShadow({mode: 'open'});
-    
+      
       //Selects the template
-      const doc = (document._currentScript || document.currentScript).ownerDocument;
       const template = doc.querySelector('#fs-record-viewer-template');
     
       //Attaches template to shadow root
       const instance = template.content.cloneNode(true);
       shadowRoot.appendChild(instance);
-    }
-  });
+      
+      //Shows & hides the "Tools" dropdown menu
+      const toggleDropdown = () => {
+        let toolsDropdown = shadowRoot.querySelector('.toolsDropdown');
+        toolsDropdown.classList.toggle('hidden');
+      }
+      
+      //Event listeners
+      this.shadowRoot.querySelector('.toolsMenu__tools').addEventListener('click', toggleDropdown);
+    }    
 
+  }
+  
+  customElements.define('fs-record-viewer', fsRecordViewer);
+  
 </script>
